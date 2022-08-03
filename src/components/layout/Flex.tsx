@@ -11,7 +11,7 @@ export const Flex = styled.div<FlexProps>`
     align-items: center;
     ${props => props.responsive && css`
         flex-direction: column-reverse;
-        justify-content: center;
+        gap: 1rem;
         @media (min-width: 1024px) {
             flex-direction: ${props.direction || 'row'};
             justify-content: space-between;
