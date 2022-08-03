@@ -6,7 +6,7 @@ const Container = styled.div`
     flex-direction: column;
     align-items: center;
     color: #fcd34d;
-    font-family: 'Serpentine';
+    font-family: 'Straczynski';
     font-weight: 700;
     white-space: nowrap;
 `
@@ -26,12 +26,14 @@ const Label = styled.span`
 const RegularLetter = styled.span`
     position: relative;
     font-size: 3rem;
+    letter-spacing: 0.1em;
     &:before {
         content: "";
         position: absolute;
-        width: 100%;
+        left: 50%;
+        transform: translate(-50%, 0);
+        width: ${(11 / 12) * 100}%;
         bottom: 2rem;
-        left: 0;
         height: 0.25rem;
         background-color:#fcd34d;
     }

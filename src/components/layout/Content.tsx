@@ -10,8 +10,24 @@ const ContentContainer = styled.main`
     padding: 0 6rem;
 `;
 
+interface Outfit {
+    background: OutfitData;
+    helmet:     OutfitData;
+    suit:       OutfitData;
+    sleeves:    OutfitData;
+    gloves:     OutfitData;
+    trousers:   OutfitData;
+    skis:       OutfitData;
+}
+
+export interface OutfitData {
+    value: string;
+    label: string;
+}
+
+
 export const Content = () => {
-    const [outfit, setOutfit] = useState({
+    const [outfit, setOutfit] = useState<Outfit>({
         background: { value: "#e0f2fe", label: 'Tlo' },
         helmet: { value: "#111827", label: 'Kask' },
         suit: { value: "#FAFAFA", label: 'Kombinezon' },
@@ -34,14 +50,13 @@ export const Content = () => {
 
     const [img, setImg] = useState("");
     const generatePng = () => {
-        console.log('a')
         let v = null;
         let canvas = document.querySelector("#canvas") as HTMLCanvasElement;
         let ctx = canvas.getContext("2d")!;
 
-        v = Canvg.fromString(ctx, (document.querySelector("#jumper")!.outerHTML))
+        v = Canvg.fromString(ctx, (document.querySelector("#jumper")!.outerHTML));
         v.start()
-        setImg(canvas.toDataURL("img/png"));
+        setImg(canvas.toDataURL("img/png", 1.0));
     }
 
     return (

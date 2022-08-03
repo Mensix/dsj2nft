@@ -9,7 +9,7 @@ export const App = () => {
         <Navbar />
         <Content />
       </Container>
-      <canvas id="canvas" style={{ display: 'none' }} />
+      <canvas id="canvas" style={{ display: 'none' }} width="1024" height="1024" />
     </>
   )
 }
