@@ -5,6 +5,7 @@ import { Item } from "../Item"
 import { Jumper, JumperProps } from "../Jumper"
 import { Text } from "../Text"
 import { Flex } from "./Flex"
+import { set, get, child, getDatabase, ref } from '@firebase/database'
 
 const ContentContainer = styled.main`
     padding: 0 6rem;
@@ -57,6 +58,11 @@ export const Content = () => {
         v = Canvg.fromString(ctx, (document.querySelector("#jumper")!.outerHTML));
         v.start()
         setImg(canvas.toDataURL("img/png", 1.0));
+
+        get(child(ref(getDatabase()), "dsj2nft")).then(snapshot => {
+            const currentValue: number = snapshot.val()
+            set(ref(getDatabase(), "dsj2nft"), currentValue + 1)
+        })
     }
 
     return (
