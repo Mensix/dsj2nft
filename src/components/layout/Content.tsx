@@ -61,8 +61,8 @@ export const Content = () => {
 
     return (
         <ContentContainer>
-            <Text fixedMargin>Edycja skoczka</Text>
-            <Flex>
+            <Text fixedMargin responsive>Edycja skoczka</Text>
+            <Flex responsive>
                 <ul>
                     {Object.entries(outfit).map(([key, value]) => (
                         <Item key={key} label={value.label} value={value.value} onChange={(e) => handleChange(key, e.target.value)} onBlur={() => generatePng} />

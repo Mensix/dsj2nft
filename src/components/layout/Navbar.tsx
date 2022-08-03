@@ -12,9 +12,9 @@ const NavbarContainer = styled.nav`
 export const Navbar = () => {
     return (
         <NavbarContainer>
-            <Flex>
+            <Flex responsive>
                 <Logo />
-                <Text>Zarejestrowane przez: <br />DSJ24.PL</Text>
+                <Text responsive>Zarejestrowane przez: <br />DSJ24.PL</Text>
             </Flex>
             <Separator />
         </NavbarContainer>

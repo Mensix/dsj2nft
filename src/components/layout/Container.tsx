@@ -5,9 +5,14 @@ export const Container = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    width: ${(8 / 12) * 100}%;
-    height: 32rem;
+    width: 100%;
+    height: 100%;
+    @media (min-width: 1024px) {
+        width: ${(8 / 12) * 100}%;
+        height: 32rem;
+    }
     border: 0.5rem solid #fcd34d;
+    
     /* background effect trick */
     &:after {
         position: absolute;
