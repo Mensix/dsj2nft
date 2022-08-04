@@ -1,5 +1,5 @@
 import { Canvg } from 'canvg'
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import styled from "styled-components"
 import { Item } from "../Item"
 import { Jumper, JumperProps } from "../Jumper"
@@ -13,12 +13,12 @@ const ContentContainer = styled.main`
 
 interface Outfit {
     background: OutfitData;
-    helmet:     OutfitData;
-    suit:       OutfitData;
-    sleeves:    OutfitData;
-    gloves:     OutfitData;
-    trousers:   OutfitData;
-    skis:       OutfitData;
+    helmet: OutfitData;
+    suit: OutfitData;
+    sleeves: OutfitData;
+    gloves: OutfitData;
+    trousers: OutfitData;
+    skis: OutfitData;
 }
 
 export interface OutfitData {
@@ -28,9 +28,10 @@ export interface OutfitData {
 
 
 export const Content = () => {
+    const [isBeingGenerated, setIsBeingGenerated] = useState(false)
     const [outfit, setOutfit] = useState<Outfit>({
         background: { value: "#e0f2fe", label: 'Tło' },
-        helmet: { value: "#111827", label: 'Kask' },
+        helmet: { value: "#7289BA", label: 'Kask' },
         suit: { value: "#FAFAFA", label: 'Kombinezon' },
         sleeves: { value: "#1E40AF", label: 'Rękawy' },
         gloves: { value: "#111827", label: 'Rękawice' },
@@ -50,22 +51,28 @@ export const Content = () => {
     }
 
     const [img, setImg] = useState("");
-    const generatePng = () => {
-        let v = null;
-        let canvas = document.querySelector("#canvas") as HTMLCanvasElement;
-        let ctx = canvas.getContext("2d")!;
 
-        v = Canvg.fromString(ctx, (document.querySelector("#jumper")!.outerHTML));
-        v.start()
-        setImg(canvas.toDataURL("img/png", 1.0));
+    useEffect(() => {
+        if (isBeingGenerated) {
+            let v = null;
+            let canvas = document.querySelector("#canvas") as HTMLCanvasElement;
+            let ctx = canvas.getContext("2d")!;
+            v = Canvg.fromString(ctx, (document.querySelector("#jumper")!.outerHTML));
+            v.start()
 
-        if(process.env.NODE_ENV === "production") {
-            get(child(ref(getDatabase()), "dsj2nft")).then(snapshot => {
-                const currentValue: number = snapshot.val()
-                set(ref(getDatabase(), "dsj2nft"), currentValue + 1)
-            })
+            setImg(canvas.toDataURL("img/png", 1.0));
+
+            if (process.env.NODE_ENV === "production") {
+                get(child(ref(getDatabase()), "dsj2nft")).then(snapshot => {
+                    const currentValue: number = snapshot.val()
+                    set(ref(getDatabase(), "dsj2nft"), currentValue + 1)
+                })
+            }
+
+            setIsBeingGenerated(false)
         }
-    }
+
+    }, [isBeingGenerated])
 
     return (
         <ContentContainer>
@@ -76,9 +83,10 @@ export const Content = () => {
                         <Item key={key} label={value.label} value={value.value} onChange={(e) => handleChange(key, e.target.value, value.label)} onBlur={() => generatePng} />
                     ))}
                     <div style={{ height: '23px' }} />
-                    <Text clickable onClick={() => generatePng()} as="a" download href={img!}>Pobierz</Text>
+                    <Text clickable onClick={() => setIsBeingGenerated(true)} as="a" download href={img!}>Pobierz</Text>
                 </ul>
-                <Jumper {...getOutfitProps()} />
+                <h1>{isBeingGenerated}</h1>
+                <Jumper large={isBeingGenerated === true} {...getOutfitProps()} />
             </Flex>
         </ContentContainer>
     )

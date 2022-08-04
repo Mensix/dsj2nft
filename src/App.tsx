@@ -24,7 +24,7 @@ export const App = () => {
         <Navbar />
         <Content />
       </Container>
-      <canvas id="canvas" style={{ display: 'none' }} width="1024" height="1024" />
+      <canvas id="canvas" style={{ display: 'none' }} width="1088" height="1088" />
     </>
   )
 }
