@@ -29,11 +29,11 @@ export interface OutfitData {
 
 export const Content = () => {
     const [outfit, setOutfit] = useState<Outfit>({
-        background: { value: "#e0f2fe", label: 'Tlo' },
+        background: { value: "#e0f2fe", label: 'Tło' },
         helmet: { value: "#111827", label: 'Kask' },
         suit: { value: "#FAFAFA", label: 'Kombinezon' },
-        sleeves: { value: "#1E40AF", label: 'Rekawy' },
-        gloves: { value: "#111827", label: 'Rekawice' },
+        sleeves: { value: "#1E40AF", label: 'Rękawy' },
+        gloves: { value: "#111827", label: 'Rękawice' },
         trousers: { value: "#1E3A8A", label: 'Spodnie' },
         skis: { value: "#BEF264", label: 'Narty' }
     })
@@ -45,8 +45,8 @@ export const Content = () => {
         return zipped.reduce((acc, curr) => ({ ...acc, [curr.key]: curr.value }), {}) as JumperProps;
     }
 
-    const handleChange = (key: string, value: string) => {
-        setOutfit({ ...outfit, [key]: { value, label: key } })
+    const handleChange = (key: string, value: string, label: string) => {
+        setOutfit({ ...outfit, [key]: { value, label } })
     }
 
     const [img, setImg] = useState("");
@@ -59,10 +59,12 @@ export const Content = () => {
         v.start()
         setImg(canvas.toDataURL("img/png", 1.0));
 
-        get(child(ref(getDatabase()), "dsj2nft")).then(snapshot => {
-            const currentValue: number = snapshot.val()
-            set(ref(getDatabase(), "dsj2nft"), currentValue + 1)
-        })
+        if(process.env.NODE_ENV === "production") {
+            get(child(ref(getDatabase()), "dsj2nft")).then(snapshot => {
+                const currentValue: number = snapshot.val()
+                set(ref(getDatabase(), "dsj2nft"), currentValue + 1)
+            })
+        }
     }
 
     return (
@@ -71,7 +73,7 @@ export const Content = () => {
             <Flex responsive>
                 <ul>
                     {Object.entries(outfit).map(([key, value]) => (
-                        <Item key={key} label={value.label} value={value.value} onChange={(e) => handleChange(key, e.target.value)} onBlur={() => generatePng} />
+                        <Item key={key} label={value.label} value={value.value} onChange={(e) => handleChange(key, e.target.value, value.label)} onBlur={() => generatePng} />
                     ))}
                     <div style={{ height: '23px' }} />
                     <Text clickable onClick={() => generatePng()} as="a" download href={img!}>Pobierz</Text>

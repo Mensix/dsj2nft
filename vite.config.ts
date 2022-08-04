@@ -12,9 +12,9 @@ export default defineConfig({
           src: './src/assets/Straczynski.ttf'
         },
         {
-          name: 'PF Tempesta Five Condensed',
-          local: 'PF Tempesta Five Condensed',
-          src: './src/assets/pf_tempesta_five_condensed_bold.ttf'
+          name: 'DSJ2',
+          local: 'DSJ2',
+          src: './src/assets/DSJ2.ttf'
         }
       ]
     }
