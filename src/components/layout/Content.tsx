@@ -80,7 +80,7 @@ export const Content = () => {
             <Flex responsive>
                 <ul>
                     {Object.entries(outfit).map(([key, value]) => (
-                        <Item key={key} label={value.label} value={value.value} onChange={(e) => handleChange(key, e.target.value, value.label)} onBlur={() => generatePng} />
+                        <Item key={key} label={value.label} value={value.value} onChange={(e) => handleChange(key, e.target.value, value.label)} onBlur={() => setIsBeingGenerated(true)} />
                     ))}
                     <div style={{ height: '23px' }} />
                     <Text clickable onClick={() => setIsBeingGenerated(true)} as="a" download href={img!}>Pobierz</Text>
